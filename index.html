@@ -1,0 +1,11 @@
+<!DOCTYPE html><meta charset=utf-8><title>30052026_Kiniero_Project_Eom05_All_Site_Update</title>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>html,body,#m{height:100%;margin:0}</style><div id=m></div><script>
+const h=location.hash.slice(1).split('/').map(Number), m=L.map('m').setView(h.length===3&&!h.some(isNaN)?[h[1],h[2]]:[10.4183320615,-9.794247714], h.length===3&&!isNaN(h[0])?h[0]:17);
+m.on('moveend',()=>{const c=m.getCenter();history.replaceState(null,'','#'+m.getZoom()+'/'+c.lat.toFixed(5)+'/'+c.lng.toFixed(5));});
+const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:22,attribution:'Imagery © Esri, Maxar, Earthstar Geographics'}).addTo(m);
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'});
+const ortho=L.tileLayer('./{z}/{x}/{y}.png',{minZoom:15,maxZoom:22,maxNativeZoom:19,opacity:1}).addTo(m);
+L.control.layers({'Satellite (Esri)':sat,'Street (OpenStreetMap)':osm},{'Site imagery':ortho},{collapsed:false}).addTo(m);
+</script>
